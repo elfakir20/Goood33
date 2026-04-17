@@ -1,1 +1,173 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exclusive Access</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial;
+    background: linear-gradient(135deg, #020617, #0f172a);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 400px;
+    width: 90%;
+}
+
+.card {
+    background: #111827;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}
+
+h1 {
+    font-size: 22px;
+}
+
+p {
+    color: #9ca3af;
+    font-size: 14px;
+}
+
+.progress {
+    margin: 20px 0;
+    background: #1f2937;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 10px;
+    width: 0%;
+    background: #22c55e;
+    transition: width 0.4s;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    background: #22c55e;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    display: none;
+}
+
+button:hover {
+    background: #16a34a;
+}
+
+.countdown {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #facc15;
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #111827;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 12px;
+    opacity: 0;
+    transition: 0.5s;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<div class="card">
+
+<h1>Checking Offers...</h1>
+<p>Please wait while we prepare your access</p>
+
+<div class="progress">
+    <div class="progress-bar" id="bar"></div>
+</div>
+
+<p id="status">Initializing...</p>
+
+<button id="btn" onclick="goOffer()">Access Now</button>
+
+<div class="countdown" id="timer">Offer expires in 02:30</div>
+
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let progress = 0;
+let bar = document.getElementById("bar");
+let status = document.getElementById("status");
+let btn = document.getElementById("btn");
+
+let messages = [
+"Connecting...",
+"Checking device...",
+"Matching offers...",
+"Finalizing..."
+];
+
+let interval = setInterval(() => {
+    progress += 25;
+    bar.style.width = progress + "%";
+    status.innerText = messages[(progress/25)-1];
+
+    if(progress >= 100){
+        clearInterval(interval);
+        status.innerText = "Offers Ready 🎉";
+        btn.style.display = "block";
+    }
+}, 900);
+
+// Countdown
+let time = 150;
+let timer = document.getElementById("timer");
+
+setInterval(() => {
+    let min = Math.floor(time / 60);
+    let sec = time % 60;
+    timer.innerText = `Offer expires in ${min}:${sec < 10 ? '0'+sec : sec}`;
+    time--;
+}, 1000);
+
+// Fake activity
+let names = ["Alex", "Sarah", "Mohamed", "Emma", "Yassine"];
+let toast = document.getElementById("toast");
+
+setInterval(() => {
+    let name = names[Math.floor(Math.random() * names.length)];
+    toast.innerText = name + " just accessed offers";
+    toast.style.opacity = 1;
+
+    setTimeout(() => {
+        toast.style.opacity = 0;
+    }, 3000);
+}, 5000);
+
+function goOffer(){
+    window.location.href = "https://smrturl.co/0e989a7";
+}
+</script>
+
+</body>
+</html>
